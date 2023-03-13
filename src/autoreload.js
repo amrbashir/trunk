@@ -1,5 +1,11 @@
 (function () {
-    var protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    var protocol = '{{protocol}}'
+    protocol =
+        protocol === 'auto'
+            ? window.location.protocol === 'https:'
+                ? 'wss:'
+                : 'ws:'
+            : protocol
     var url = protocol + '//' + window.location.host + '/_trunk/ws';
     var poll_interval = 5000;
     var reload_upon_connect = () => {

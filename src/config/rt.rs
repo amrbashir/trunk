@@ -218,6 +218,8 @@ pub struct RtcServe {
     pub proxies: Option<Vec<ConfigOptsProxy>>,
     /// Whether to disable auto-reload of the web page when a build completes.
     pub no_autoreload: bool,
+    /// Protocol used for autoreload WebSockets connection.
+    pub ws_protocol: Option<String>,
 }
 
 impl RtcServe {
@@ -247,6 +249,7 @@ impl RtcServe {
             proxy_ws: opts.proxy_ws,
             proxies,
             no_autoreload: opts.no_autoreload,
+            ws_protocol: opts.ws_protocol,
         })
     }
 }

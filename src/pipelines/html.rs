@@ -36,11 +36,17 @@ pub struct HtmlPipeline {
     target_html_dir: Arc<PathBuf>,
     /// An optional channel to be used to communicate ignore paths to the watcher.
     ignore_chan: Option<mpsc::Sender<PathBuf>>,
+    /// Protocol used for autoreload WebSockets connection.
+    pub ws_protocol: Option<String>,
 }
 
 impl HtmlPipeline {
     /// Create a new instance.
-    pub fn new(cfg: Arc<RtcBuild>, ignore_chan: Option<mpsc::Sender<PathBuf>>) -> Result<Self> {
+    pub fn new(
+        cfg: Arc<RtcBuild>,
+        ignore_chan: Option<mpsc::Sender<PathBuf>>,
+        ws_protocol: Option<String>,
+    ) -> Result<Self> {
         let target_html_path = cfg
             .target
             .canonicalize()
@@ -57,6 +63,7 @@ impl HtmlPipeline {
             target_html_path,
             target_html_dir,
             ignore_chan,
+            ws_protocol,
         })
     }
 
@@ -204,9 +211,13 @@ impl HtmlPipeline {
 
         // Inject the WebSocket autoloader.
         if self.cfg.inject_autoloader {
-            target_html
-                .select("body")
-                .append_html(format!("<script>{}</script>", RELOAD_SCRIPT));
+            target_html.select("body").append_html(format!(
+                "<script>{}</script>",
+                RELOAD_SCRIPT.replace(
+                    "{{protocol}}",
+                    &self.ws_protocol.clone().unwrap_or_else(|| "auto".into())
+                )
+            ));
         }
     }
 }

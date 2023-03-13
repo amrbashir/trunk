@@ -126,6 +126,9 @@ pub struct ConfigOptsServe {
     #[arg(long = "no-autoreload")]
     #[serde(default)]
     pub no_autoreload: bool,
+    /// Protocol used for autoreload WebSockets connection.
+    #[arg(long = "ws-protocol")]
+    pub ws_protocol: Option<String>,
 }
 
 /// Config options for the serve system.
@@ -335,6 +338,7 @@ impl ConfigOpts {
             proxy_insecure: cli.proxy_insecure,
             proxy_ws: cli.proxy_ws,
             no_autoreload: cli.no_autoreload,
+            ws_protocol: cli.ws_protocol,
         };
         let cfg = ConfigOpts {
             build: None,
@@ -501,6 +505,7 @@ impl ConfigOpts {
                 g.address = g.address.or(l.address);
                 g.port = g.port.or(l.port);
                 g.proxy_ws = g.proxy_ws || l.proxy_ws;
+                g.ws_protocol = g.ws_protocol.or(l.ws_protocol);
                 // NOTE: this can not be disabled in the cascade.
                 if l.no_autoreload {
                     g.no_autoreload = true;
