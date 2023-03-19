@@ -3,10 +3,10 @@
     protocol =
         protocol === 'auto'
             ? window.location.protocol === 'https:'
-                ? 'wss:'
-                : 'ws:'
+                ? 'wss'
+                : 'ws'
             : protocol
-    var url = protocol + '//' + '{{__TRUNK_ADDRESS__}}' + '/_trunk/ws';
+    var url = protocol + '://' + '{{__TRUNK_ADDRESS__}}' + '/_trunk/ws';
     var poll_interval = 5000;
     var reload_upon_connect = () => {
         window.setTimeout(
