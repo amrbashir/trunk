@@ -5,13 +5,38 @@ This changelog follows the patterns described here: https://keepachangelog.com/e
 Subheadings to categorize changes are `added, changed, deprecated, removed, fixed, security`.
 
 ## Unreleased
+### changed
+- Remove HTML glob in tailwind.config.js
 
+## 0.17.4
+### added
+- Multiple PRs have been landed in attempts to address the recursive / infinite build cycle which can be triggered under some conditions. Shoutout to @ctron for their work in driving this resolution forward.
+
+## 0.17.3
+### added
+- Add `inject_scripts` option to build configuration to allow toggle of injecting the modulepreload and scripts rendered in the final html.
+
+## 0.17.2
+### fixed
+- Add missing `tools.tailwindcss` setting to configure the version of the Tailwindcss CLI to download.
+
+### added
+- A few site updates.
+- Some additional tests.
+
+## 0.17.1
+### changed
+- Updated the default tool versions for wasm-bindgen, tailwind, sass, and wasm-opt.
+- Update Trunk deps (should not have any functional implications).
+- Update deps of all example projects.
+- When resolving tools, do not abort if entries in the tool's extra paths list do not exist. This will happen naturally as part of the development of tools. Instead, we just log a warning.
+
+## 0.17.0
 ### added
 
 - Added `data-target-path` to `copy-dir`.
 - Allow processing `<script>` tags with the asset pipeline.
 - Added `data-loader-shim` to workers to create shim script.
-- Added `--ws-protocol` cli option and `ws_protocol` config option to specify the WebSockets protocol used for auto-reload.
 - Added tailwindcss support via `rel="tailwind-css"`.
 - Added support for `svg` files when using `rel="inline"`
 - Print all acessible addresses if `0.0.0.0` is used.

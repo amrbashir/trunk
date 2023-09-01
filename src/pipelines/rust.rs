@@ -160,7 +160,8 @@ impl RustApp {
                 no_default_features: data_no_default_features,
             }
         } else {
-            // The features have not been overridden in the attributes so use the features passed to cargo
+            // The features have not been overridden in the attributes so use the
+            // features passed to cargo.
             cfg.cargo_features.clone()
         };
 
@@ -634,6 +635,11 @@ impl RustAppOutput {
             if let Some(id) = self.id {
                 dom.select(&super::trunk_id_selector(id)).remove();
             }
+            return Ok(());
+        }
+
+        if !self.cfg.inject_scripts {
+            // Configuration directed we do not inject any scripts.
             return Ok(());
         }
 
